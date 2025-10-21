@@ -1,12 +1,11 @@
-package com.example.delivery_app_grupo_6.navigation
-
 import androidx.compose.runtime.Composable
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.delivery_app_grupp_6.ui.screen.PantallaCarrito
-import com.example.delivery_app_grupp_6.ui.screen.Pantallahicio
-import com.example.delivery_app_grupp_6.ui.screen.PantallaProductos
+import com.example.delivery_app_grupo_6.ui.screen.PantallaCarrito
+import com.example.delivery_app_grupo_6.ui.screen.Pantallahicio
+import com.example.delivery_app_grupo_6.ui.screen.PantallaProductos
 
 @Composable
 fun AppNavigation() {
@@ -34,4 +33,3 @@ fun AppNavigation() {
             )
         }
     }
-}
