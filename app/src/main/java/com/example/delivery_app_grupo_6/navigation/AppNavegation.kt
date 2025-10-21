@@ -1,10 +1,11 @@
-import androidx.compose.runtime.Composable
+package com.example.delivery_app_grupo_6.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCarrito
-import com.example.delivery_app_grupo_6.ui.screen.Pantallahicio
+import com.example.delivery_app_grupo_6.ui.screen.PantallaInicio
 import com.example.delivery_app_grupo_6.ui.screen.PantallaProductos
 
 @Composable
@@ -16,7 +17,7 @@ fun AppNavigation() {
         startDestination = "home"
     ) {
         composable("home") {
-            Pantallahicio(
+            PantallaInicio( // ✅ Nombre corregido
                 onProductsClick = { navController.navigate("products") },
                 onCartClick = { navController.navigate("cart") }
             )
@@ -33,3 +34,4 @@ fun AppNavigation() {
             )
         }
     }
+}

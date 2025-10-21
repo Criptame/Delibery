@@ -12,14 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.delivery_app_grupp_6.model.Product
+import com.example.delivery_app_grupo_6.model.Product
 
 @Composable
 fun PantallaProductos(
     onBackClick: () -> Unit,
     onCartClick: () -> Unit
 ) {
-    val sampleProducts = listOf(
+    val sampleProducts = listOf( // ✅ "listOf" en minúscula
         Product(1, "Pizza", "Pizza margarita", 12.99, "", "Comida"),
         Product(2, "Hamburguesa", "Hamburguesa con queso", 8.99, "", "Comida"),
         Product(3, "Ensalada", "Ensalada César", 6.99, "", "Comida")

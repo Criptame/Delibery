@@ -10,14 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.delivery_app_grupp_6.model.CartItem
-import com.example.delivery_app_grupp_6.model.Product
+import com.example.delivery_app_grupo_6.model.CartItem
+import com.example.delivery_app_grupo_6.model.Product
 
 @Composable
 fun PantallaCarrito(
     onBackClick: () -> Unit
 ) {
-    val sampleCartItems = listOf(
+    val sampleCartItems = listOf( // ✅ CORREGIDO: "listOf" en minúscula
         CartItem(Product(1, "Pizza", "Pizza margarita", 12.99, "", "Comida"), 2),
         CartItem(Product(2, "Hamburguesa", "Hamburguesa con queso", 8.99, "", "Comida"), 1)
     )
