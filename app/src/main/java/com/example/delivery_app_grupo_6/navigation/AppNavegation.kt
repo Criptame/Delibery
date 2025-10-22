@@ -22,7 +22,6 @@ fun AppNavigation() {
                 onProductsClick = { navController.navigate("productos") },
                 onCartClick = { navController.navigate("carrito") },
                 onProfileClick = { navController.navigate("crearPerfil") }
-
             )
         }
 
