@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCarrito
 import com.example.delivery_app_grupo_6.ui.screen.PantallaInicio
 import com.example.delivery_app_grupo_6.ui.screen.PantallaProductos
+import com.example.delivery_app_grupo_6.ui.screen.PantallaCrearPerfil
 
 @Composable
 fun AppNavigation() {
@@ -16,26 +17,38 @@ fun AppNavigation() {
         navController = navController,
         startDestination = "inicio"
     ) {
-        composable("inicio") {
+        composable(route = "inicio") {
             PantallaInicio(
                 onProductsClick = { navController.navigate("productos") },
-                onCartClick = { navController.navigate("carrito") }
+                onCartClick = { navController.navigate("carrito") },
+                onProfileClick = { navController.navigate("crearPerfil") }
             )
         }
 
-        composable("productos") {
+        composable(route = "productos") {
             PantallaProductos(
                 onBackClick = { navController.popBackStack() },
                 onCartClick = { navController.navigate("carrito") }
             )
         }
 
-        composable("carrito") {
+        composable(route = "carrito") {
             PantallaCarrito(
                 onBackClick = { navController.popBackStack() },
                 onOrderClick = {
+                    // Aquí puedes procesar el pedido
                     println("Pedido confirmado!")
-                    // Podrías navegar a una pantalla de confirmación
+                }
+            )
+        }
+
+        composable(route = "crearPerfil") {
+            PantallaCrearPerfil(
+                onBackClick = { navController.popBackStack() },
+                onSaveClick = { user ->
+                    // Aquí guardas el usuario
+                    println("Usuario guardado: $user")
+                    navController.popBackStack()
                 }
             )
         }
