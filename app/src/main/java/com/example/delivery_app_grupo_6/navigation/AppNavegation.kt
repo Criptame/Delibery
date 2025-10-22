@@ -34,8 +34,8 @@ fun AppNavigation() {
             PantallaCarrito(
                 onBackClick = { navController.popBackStack() },
                 onOrderClick = {
-                    // Aquí puedes procesar el pedido
                     println("Pedido confirmado!")
+                    // Podrías navegar a una pantalla de confirmación
                 }
             )
         }
