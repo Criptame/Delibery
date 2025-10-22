@@ -14,23 +14,29 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "inicio"
     ) {
-        composable("home") {
-            PantallaInicio( // ✅ Nombre corregido
-                onProductsClick = { navController.navigate("products") },
-                onCartClick = { navController.navigate("cart") }
+        composable("inicio") {
+            PantallaInicio(
+                onProductsClick = { navController.navigate("productos") },
+                onCartClick = { navController.navigate("carrito") }
             )
         }
-        composable("products") {
+
+        composable("productos") {
             PantallaProductos(
                 onBackClick = { navController.popBackStack() },
-                onCartClick = { navController.navigate("cart") }
+                onCartClick = { navController.navigate("carrito") }
             )
         }
-        composable("cart") {
+
+        composable("carrito") {
             PantallaCarrito(
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onOrderClick = {
+                    // Aquí puedes procesar el pedido
+                    println("Pedido confirmado!")
+                }
             )
         }
     }
