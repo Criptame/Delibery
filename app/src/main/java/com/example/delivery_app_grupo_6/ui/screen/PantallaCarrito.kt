@@ -7,40 +7,46 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.delivery_app_grupo_6.model.CartItem
-import com.example.delivery_app_grupo_6.model.Product
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
 
 @Composable
 fun PantallaCarrito(
     onBackClick: () -> Unit,
-    onOrderClick: () -> Unit
+    onOrderClick: () -> Unit,
+    cartViewModel: CartViewModel,
+    paddingValues: androidx.compose.foundation.layout.PaddingValues
 ) {
-    val carrito = listOf(
-        CartItem(Product(1, "Pizza Margarita", "Pizza clásica", 12.99, "", "Comida"), 2),
-        CartItem(Product(2, "Hamburguesa", "Con queso y papas", 8.99, "", "Comida"), 1),
-        CartItem(Product(4, "Refresco", "Bebida 500ml", 2.50, "", "Bebida"), 3)
-    )
-
-    val subtotal = carrito.sumOf { it.product.price * it.quantity }
+    val cartItems by cartViewModel.cartItems.collectAsStateWithLifecycle()
+    val subtotal = cartViewModel.getTotalPrice()
     val envio = 2.50
     val total = subtotal + envio
 
-    Scaffold { paddingValues ->
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(innerPadding)
         ) {
             Button(
                 onClick = onBackClick,
@@ -56,22 +62,38 @@ fun PantallaCarrito(
                 fontWeight = FontWeight.Bold
             )
 
-            if (carrito.isEmpty()) {
+            if (cartItems.isEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(32.dp),
-                    horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Tu carrito está vacío")
-                    Text("Agrega productos desde el menú")
+                    Text(
+                        text = "Tu carrito está vacío",
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = "Agrega productos desde el menú",
+                        fontSize = 14.sp
+                    )
                 }
             } else {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
-                    items(carrito) { item ->
-                        ItemCarrito(item = item)
+                    items(cartItems) { cartItem ->
+                        ItemCarrito(
+                            item = cartItem,
+                            onIncrease = {
+                                cartViewModel.updateQuantity(cartItem, cartItem.quantity + 1)
+                            },
+                            onDecrease = {
+                                cartViewModel.updateQuantity(cartItem, cartItem.quantity - 1)
+                            },
+                            onRemove = { cartViewModel.removeFromCart(cartItem) }
+                        )
                     }
                 }
 
@@ -130,7 +152,7 @@ fun PantallaCarrito(
                             onClick = onOrderClick,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Confirmar Pedido")
+                            Text("✅ Confirmar Pedido")
                         }
                     }
                 }
@@ -140,7 +162,12 @@ fun PantallaCarrito(
 }
 
 @Composable
-fun ItemCarrito(item: CartItem) {
+fun ItemCarrito(
+    item: com.example.delivery_app_grupo_6.model.CartItem,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
+    onRemove: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -160,11 +187,55 @@ fun ItemCarrito(item: CartItem) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Cantidad: ${item.quantity}")
+                // Controles de cantidad
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(
+                        onClick = onDecrease,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Remove,
+                            contentDescription = "Disminuir"
+                        )
+                    }
+
+                    Text(
+                        text = "${item.quantity}",
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    IconButton(
+                        onClick = onIncrease,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Aumentar"
+                        )
+                    }
+                }
+
                 Spacer(modifier = Modifier.weight(1f))
-                Text("$${"%.2f".format(item.product.price * item.quantity)}")
+
+                Text(
+                    text = "$${"%.2f".format(item.product.price * item.quantity)}",
+                    fontWeight = FontWeight.Bold
+                )
+
+                IconButton(
+                    onClick = onRemove
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Eliminar"
+                    )
+                }
             }
         }
     }

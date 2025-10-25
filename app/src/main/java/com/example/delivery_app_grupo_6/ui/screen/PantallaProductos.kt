@@ -1,5 +1,6 @@
 package com.example.delivery_app_grupo_6.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,33 +12,45 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivery_app_grupo_6.model.Product
+import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
+import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 
 @Composable
 fun PantallaProductos(
     onBackClick: () -> Unit,
-    onCartClick: () -> Unit
+    onCartClick: () -> Unit,
+    productViewModel: ProductViewModel,
+    cartViewModel: CartViewModel,
+    paddingValues: androidx.compose.foundation.layout.PaddingValues
 ) {
-    val productos = listOf(
-        Product(1, "Pizza Margarita", "Pizza clásica con queso y tomate", 12.99, "", "Comida"),
-        Product(2, "Hamburguesa", "Hamburguesa con queso y papas", 8.99, "", "Comida"),
-        Product(3, "Ensalada César", "Ensalada fresca con pollo", 6.99, "", "Comida"),
-        Product(4, "Refresco", "Bebida 500ml", 2.50, "", "Bebida"),
-        Product(5, "Helado", "Postre de vainilla", 4.99, "", "Postre")
-    )
+    val products = productViewModel.filteredProducts.collectAsStateWithLifecycle().value
+    val allProducts = productViewModel.products.collectAsStateWithLifecycle().value
+    val selectedCategory = productViewModel.selectedCategory.collectAsStateWithLifecycle().value
 
-    Scaffold { paddingValues ->
+    // Cargar productos al iniciar
+    LaunchedEffect(Unit) {
+        if (allProducts.isEmpty()) {
+            // Los productos se cargan automáticamente en el init del ViewModel
+        }
+    }
+
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(innerPadding)
         ) {
             Button(
                 onClick = onBackClick,
@@ -47,17 +60,64 @@ fun PantallaProductos(
             }
 
             Text(
-                text = "Nuestro Menú",
+                text = "🍕 Nuestro Menú",
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            LazyColumn(
-                modifier = Modifier.weight(1f)
-            ) {
-                items(productos) { producto ->
-                    ProductoItem(producto = producto)
+            // Filtros de categoría
+            val uniqueCategories = allProducts.map { it.category }.distinct()
+            if (uniqueCategories.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    FilterChip(
+                        selected = selectedCategory == null,
+                        onClick = { productViewModel.filterByCategory(null) },
+                        label = { Text("Todos") }
+                    )
+                    uniqueCategories.forEach { category ->
+                        FilterChip(
+                            selected = selectedCategory == category,
+                            onClick = { productViewModel.filterByCategory(category) },
+                            label = { Text(category) }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            if (products.isEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "No hay productos disponibles",
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = "Intenta con otra categoría",
+                        fontSize = 14.sp
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    items(products) { product ->
+                        ProductoItem(
+                            producto = product,
+                            onAddToCart = { cartViewModel.addToCart(product) }
+                        )
+                    }
                 }
             }
 
@@ -67,14 +127,17 @@ fun PantallaProductos(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text("Ver Carrito")
+                Text("🛒 Ver Carrito (${cartViewModel.getItemCount()})")
             }
         }
     }
 }
 
 @Composable
-fun ProductoItem(producto: Product) {
+fun ProductoItem(
+    producto: Product,
+    onAddToCart: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,7 +162,7 @@ fun ProductoItem(producto: Product) {
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Precio:")
+                Text("Categoría: ${producto.category}")
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "$${"%.2f".format(producto.price)}",
@@ -108,12 +171,12 @@ fun ProductoItem(producto: Product) {
             }
 
             Button(
-                onClick = { /* Agregar al carrito */ },
+                onClick = onAddToCart,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp)
             ) {
-                Text("Agregar al Carrito")
+                Text("➕ Agregar al Carrito")
             }
         }
     }
