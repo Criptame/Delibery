@@ -125,9 +125,9 @@ fun PantallaProductos(
                 onClick = onCartClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(top = 8.dp)
             ) {
-                Text("🛒 Ver Carrito (${cartViewModel.getItemCount()})")
+                Text("Ver Carrito (${cartViewModel.getItemCount()})")
             }
         }
     }
@@ -176,7 +176,7 @@ fun ProductoItem(
                     .fillMaxWidth()
                     .padding(top = 8.dp)
             ) {
-                Text("➕ Agregar al Carrito")
+                Text("Agregar al Carrito")
             }
         }
     }

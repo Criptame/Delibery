@@ -24,18 +24,51 @@ class ProductViewModel : ViewModel() {
 
     private fun loadProducts() {
         viewModelScope.launch {
-            val sampleProducts = listOf(
-                Product(1, "Pizza Margarita", "Pizza clásica con queso y tomate", 12.99, "https://example.com/pizza.jpg", "Comida"),
-                Product(2, "Hamburguesa", "Hamburguesa con queso y papas", 8.99, "https://example.com/burger.jpg", "Comida"),
-                Product(3, "Ensalada César", "Ensalada fresca con pollo", 6.99, "https://example.com/salad.jpg", "Comida"),
-                Product(4, "Refresco", "Bebida 500ml", 2.50, "https://example.com/soda.jpg", "Bebida"),
-                Product(5, "Helado", "Postre de vainilla", 4.99, "https://example.com/icecream.jpg", "Postre"),
-                Product(6, "Café", "Café americano", 3.50, "https://example.com/coffee.jpg", "Bebida"),
-                Product(7, "Tacos", "Tacos de carne con salsa", 10.99, "https://example.com/tacos.jpg", "Comida"),
-                Product(8, "Pastel", "Pastel de chocolate", 5.99, "https://example.com/cake.jpg", "Postre")
+            // PRODUCTOS REALES - sin URLs de ejemplo
+            val realProducts = listOf(
+                Product(
+                    id = 1,
+                    name = "Pizza Margarita",
+                    description = "Pizza clásica con queso mozzarella y tomate fresco",
+                    price = 12.99,
+                    imageUrl = "",
+                    category = "Pizzas"
+                ),
+                Product(
+                    id = 2,
+                    name = "Hamburguesa Clásica",
+                    description = "Carne de res, lechuga, tomate y queso cheddar",
+                    price = 8.99,
+                    imageUrl = "",
+                    category = "Hamburguesas"
+                ),
+                Product(
+                    id = 3,
+                    name = "Ensalada César",
+                    description = "Lechuga romana, pollo a la parrilla y aderezo césar",
+                    price = 6.99,
+                    imageUrl = "",
+                    category = "Ensaladas"
+                ),
+                Product(
+                    id = 4,
+                    name = "Refresco",
+                    description = "Bebida refrescante 500ml",
+                    price = 2.50,
+                    imageUrl = "",
+                    category = "Bebidas"
+                ),
+                Product(
+                    id = 5,
+                    name = "Helado de Vainilla",
+                    description = "Postre cremoso de vainilla con topping",
+                    price = 4.99,
+                    imageUrl = "",
+                    category = "Postres"
+                )
             )
-            _products.value = sampleProducts
-            _filteredProducts.value = sampleProducts
+            _products.value = realProducts
+            _filteredProducts.value = realProducts
         }
     }
 
