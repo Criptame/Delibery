@@ -35,7 +35,7 @@ fun PantallaInicio(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "🍕 App Delivery",
+            text = "App Delivery",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)

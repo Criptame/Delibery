@@ -60,7 +60,7 @@ fun PantallaProductos(
             }
 
             Text(
-                text = "🍕 Nuestro Menú",
+                text = "Nuestro Menú",
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
