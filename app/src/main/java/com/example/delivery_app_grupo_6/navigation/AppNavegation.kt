@@ -1,30 +1,30 @@
 package com.example.delivery_app_grupo_6.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCarrito
 import com.example.delivery_app_grupo_6.ui.screen.PantallaInicio
 import com.example.delivery_app_grupo_6.ui.screen.PantallaProductos
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCrearPerfil
+import com.example.delivery_app_grupo_6.ui.screen.PantallaCamaraConQR
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 import com.example.delivery_app_grupo_6.viewmodel.UserViewModel
+import android.widget.Toast
 
 @Composable
 fun AppNavigation(
-    navController: androidx.navigation.NavHostController,
+    navController: NavHostController,
     paddingValues: PaddingValues,
     productViewModel: ProductViewModel,
     cartViewModel: CartViewModel,
     userViewModel: UserViewModel,
     onTitleChange: (String) -> Unit
 ) {
-    // Observar el estado del usuario usando collectAsStateWithLifecycle
     val currentUser = userViewModel.currentUser.collectAsStateWithLifecycle().value
 
     NavHost(
@@ -45,6 +45,10 @@ fun AppNavigation(
                 onProfileClick = {
                     navController.navigate("crearPerfil")
                     onTitleChange("Perfil")
+                },
+                onGeneraClick = { // CAMBIADO: onCameraClick → onGeneraClick
+                    navController.navigate("camara")
+                    onTitleChange("Cámara y QR")
                 },
                 user = currentUser,
                 paddingValues = paddingValues
@@ -70,7 +74,6 @@ fun AppNavigation(
             PantallaCarrito(
                 onBackClick = { navController.popBackStack() },
                 onOrderClick = {
-                    // Procesar pedido y limpiar carrito
                     cartViewModel.clearCart()
                     navController.navigate("inicio") {
                         popUpTo("inicio") { inclusive = true }
@@ -92,6 +95,21 @@ fun AppNavigation(
                     onTitleChange("Inicio")
                 },
                 user = currentUser,
+                paddingValues = paddingValues
+            )
+        }
+
+        composable(route = "camara") {
+            onTitleChange("Cámara y QR")
+            PantallaCamaraConQR(
+                onBackClick = { navController.popBackStack() },
+                onQRScannerClick = {
+                    Toast.makeText(
+                        navController.context,
+                        "QR simulado: DESCUENTO10",
+                        Toast.LENGTH_LONG
+                    ).show()
+                },
                 paddingValues = paddingValues
             )
         }

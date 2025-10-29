@@ -5,17 +5,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import com.example.delivery_app_grupo_6.model.User
 
 @Composable
@@ -23,6 +28,7 @@ fun PantallaInicio(
     onProductsClick: () -> Unit,
     onCartClick: () -> Unit,
     onProfileClick: () -> Unit,
+    onGeneraClick: () -> Unit, // CAMBIADO: Agregado el parámetro onGeneraClick
     user: User?,
     paddingValues: androidx.compose.foundation.layout.PaddingValues
 ) {
@@ -51,13 +57,13 @@ fun PantallaInicio(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "👋 ¡Bienvenido, ${user.name}!",
+                        text = " ¡Bienvenido, ${user.name}!",
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
-                    Text("📧 ${user.email}")
-                    Text("📱 ${user.phone}")
-                    Text("🏠 ${user.address}")
+                    Text(" ${user.email}")
+                    Text(" ${user.phone}")
+                    Text(" ${user.address}")
                 }
             }
         }
@@ -70,7 +76,7 @@ fun PantallaInicio(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text("🍴 Ver Menú Completo")
+            Text("Ver Menú Completo")
         }
 
         Button(
@@ -79,7 +85,7 @@ fun PantallaInicio(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text("🛒 Ver Carrito")
+            Text("Ver Carrito")
         }
 
         Button(
@@ -88,7 +94,25 @@ fun PantallaInicio(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text(if (user != null) "👤 Editar Perfil" else "👤 Crear Perfil")
+            Text(if (user != null) "Editar Perfil" else "Crear Perfil")
+        }
+
+        // NUEVO: Botón de Cámara y QR
+        Button(
+            onClick = onGeneraClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF2196F3) // Color azul distintivo
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.CameraAlt,
+                contentDescription = "Cámara",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Cámara y QR")
         }
     }
 }
