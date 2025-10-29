@@ -11,10 +11,12 @@ import com.example.delivery_app_grupo_6.ui.screen.PantallaInicio
 import com.example.delivery_app_grupo_6.ui.screen.PantallaProductos
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCrearPerfil
 import com.example.delivery_app_grupo_6.ui.screen.PantallaCamaraConQR
+import com.example.delivery_app_grupo_6.ui.screen.PantallaConfirmacionPedido
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 import com.example.delivery_app_grupo_6.viewmodel.UserViewModel
 import android.widget.Toast
+import kotlin.random.Random
 
 @Composable
 fun AppNavigation(
@@ -46,7 +48,7 @@ fun AppNavigation(
                     navController.navigate("crearPerfil")
                     onTitleChange("Perfil")
                 },
-                onGeneraClick = { // CAMBIADO: onCameraClick → onGeneraClick
+                onGeneraClick = {
                     navController.navigate("camara")
                     onTitleChange("Cámara y QR")
                 },
@@ -74,11 +76,8 @@ fun AppNavigation(
             PantallaCarrito(
                 onBackClick = { navController.popBackStack() },
                 onOrderClick = {
-                    cartViewModel.clearCart()
-                    navController.navigate("inicio") {
-                        popUpTo("inicio") { inclusive = true }
-                    }
-                    onTitleChange("Inicio")
+                    // Navegar a la pantalla de confirmación en lugar de limpiar directamente
+                    navController.navigate("confirmacionPedido")
                 },
                 cartViewModel = cartViewModel,
                 paddingValues = paddingValues
@@ -113,5 +112,41 @@ fun AppNavigation(
                 paddingValues = paddingValues
             )
         }
+
+        composable(route = "confirmacionPedido") {
+            onTitleChange("Confirmación")
+
+            // Obtener datos actuales del carrito y usuario
+            val cartItems = cartViewModel.cartItems.collectAsStateWithLifecycle().value
+            val currentUser = userViewModel.currentUser.collectAsStateWithLifecycle().value
+            val totalPrice = cartViewModel.getTotalPrice() + 2.50 // subtotal + envío
+
+            PantallaConfirmacionPedido(
+                onBackToHome = {
+                    // Limpiar carrito y volver al inicio
+                    cartViewModel.clearCart()
+                    navController.navigate("inicio") {
+                        popUpTo("inicio") { inclusive = true }
+                    }
+                    onTitleChange("Inicio")
+                },
+                orderNumber = generateOrderNumber(),
+                estimatedTime = generateEstimatedTime(),
+                cartItems = cartItems,
+                user = currentUser,
+                totalPrice = totalPrice,
+                paddingValues = paddingValues
+            )
+        }
     }
+}
+
+// Funciones auxiliares para generar datos del pedido
+private fun generateOrderNumber(): String {
+    return (1000..9999).random().toString()
+}
+
+private fun generateEstimatedTime(): String {
+    val minutes = (25..45).random()
+    return "$minutes-${minutes + 10} minutos"
 }
