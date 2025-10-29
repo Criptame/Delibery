@@ -1,4 +1,4 @@
-package com.example.delivery_app_grupo_6.componentss
+package com.example.delivery_app_grupo_6.componentes
 
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalDrawerSheet

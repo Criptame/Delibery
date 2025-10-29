@@ -1,4 +1,4 @@
-package com.example.delivery_app_grupo_6.componentss
+package com.example.delivery_app_grupo_6.componentes
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
