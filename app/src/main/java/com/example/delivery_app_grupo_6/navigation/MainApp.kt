@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.delivery_app_grupo_6.componentes.AppDrawer
 import com.example.delivery_app_grupo_6.componentes.AppTopBar
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
+import com.example.delivery_app_grupo_6.viewmodel.PostViewModel // ← AGREGAR
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 import com.example.delivery_app_grupo_6.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 fun MainApp(
     productViewModel: ProductViewModel,
     cartViewModel: CartViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    postViewModel: PostViewModel // ← AGREGAR PARÁMETRO
 ) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -57,6 +59,10 @@ fun MainApp(
                     navController.navigate("crearPerfil")
                     drawerTitle = "Perfil"
                 },
+                navigateToPosts = { // ← AGREGAR NUEVA OPCIÓN
+                    navController.navigate("posts")
+                    drawerTitle = "Posts API"
+                },
                 closeDrawer = {
                     scope.launch { drawerState.close() }
                 }
@@ -80,6 +86,7 @@ fun MainApp(
                 productViewModel = productViewModel,
                 cartViewModel = cartViewModel,
                 userViewModel = userViewModel,
+                postViewModel = postViewModel, // ← AGREGAR
                 onTitleChange = { newTitle -> drawerTitle = newTitle }
             )
         }
