@@ -1,6 +1,13 @@
 package com.example.delivery_app_grupo_6.componentes
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
@@ -17,6 +24,7 @@ fun AppDrawer(
     navigateToProducts: () -> Unit,
     navigateToCart: () -> Unit,
     navigateToProfile: () -> Unit,
+    navigateToPosts: () -> Unit, // ← NUEVO PARÁMETRO AGREGADO
     closeDrawer: () -> Unit
 ) {
     ModalDrawerSheet {
@@ -32,6 +40,12 @@ fun AppDrawer(
                 navigateToHome()
                 closeDrawer()
             },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Inicio"
+                )
+            },
             modifier = Modifier.padding(8.dp)
         )
 
@@ -41,6 +55,12 @@ fun AppDrawer(
             onClick = {
                 navigateToProducts()
                 closeDrawer()
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Store,
+                    contentDescription = "Productos"
+                )
             },
             modifier = Modifier.padding(8.dp)
         )
@@ -52,6 +72,12 @@ fun AppDrawer(
                 navigateToCart()
                 closeDrawer()
             },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Carrito"
+                )
+            },
             modifier = Modifier.padding(8.dp)
         )
 
@@ -61,6 +87,29 @@ fun AppDrawer(
             onClick = {
                 navigateToProfile()
                 closeDrawer()
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Perfil"
+                )
+            },
+            modifier = Modifier.padding(8.dp)
+        )
+
+        // ← NUEVA OPCIÓN AGREGADA PARA POSTS
+        NavigationDrawerItem(
+            label = { Text("Posts API") },
+            selected = currentRoute == "posts",
+            onClick = {
+                navigateToPosts() // ← LLAMADA AL NUEVO PARÁMETRO
+                closeDrawer()
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.List,
+                    contentDescription = "Posts API"
+                )
             },
             modifier = Modifier.padding(8.dp)
         )
