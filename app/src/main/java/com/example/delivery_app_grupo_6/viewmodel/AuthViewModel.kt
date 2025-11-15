@@ -15,5 +15,7 @@ class AuthViewModel : ViewModel() {
     fun logout() {
         isLoggedIn = false
     }
+
+    //El Isaac es Weko
 }
 
