@@ -56,45 +56,39 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
-    // ✅ AÑADE ESTAS DEPENDENCIAS NUEVAS:
+    // ✅ DEPENDENCIAS DE NAVEGACIÓN Y UI
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
     implementation("androidx.compose.material3:material3:1.2.0")
 
+    // ✅ DEPENDENCIAS DE CÁMARA Y QR
     implementation ("com.google.zxing:core:3.5.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation ("androidx.camera:camera-camera2:1.3.0")
     implementation ("androidx.camera:camera-lifecycle:1.3.0")
     implementation ("androidx.camera:camera-view:1.3.0")
     implementation ("com.google.accompanist:accompanist-permissions:0.31.5-beta")
-
-    implementation("androidx.camera:camera-camera2:1.3.0")
-    implementation("androidx.camera:camera-lifecycle:1.3.0")
-    implementation("androidx.camera:camera-view:1.3.0")
-    implementation("androidx.compose.material3:material3:1.1.2")
-// Permisos para Compose
-    implementation("com.google.accompanist:accompanist-permissions:0.31.5-beta")
-// Para futura implementación de QR
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
 
-    // SQLite (ya incluido en Android, pero necesitamos Room para mejor manejo)
+    // ✅ DEPENDENCIAS DE BASE DE DATOS
     implementation("androidx.room:room-runtime:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
 
-    // Coroutines para operaciones asíncronas
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    // ✅ DEPENDENCIAS DE CORRUTINAS Y LIFECYCLE
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-    // Lifecycle components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-
-    // ✅ AGREGAR ESTAS DEPENDENCIAS PARA API REST:
+    // ✅ DEPENDENCIAS PARA API REST (AGREGADAS)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
+    // ✅ TESTING
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
