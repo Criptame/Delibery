@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 fun MainApp(
     productViewModel: ProductViewModel,
     cartViewModel: CartViewModel,
-    userViewModel: UserViewModel,
-    postViewModel: PostViewModel // ← AGREGAR PARÁMETRO
+    userViewModel: UserViewModel
+    // ← QUITAR postViewModel
 ) {
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -59,10 +59,7 @@ fun MainApp(
                     navController.navigate("crearPerfil")
                     drawerTitle = "Perfil"
                 },
-                navigateToPosts = { // ← AGREGAR NUEVA OPCIÓN
-                    navController.navigate("posts")
-                    drawerTitle = "Posts API"
-                },
+                // ← QUITAR navigateToPosts si no lo necesitas
                 closeDrawer = {
                     scope.launch { drawerState.close() }
                 }
@@ -86,7 +83,7 @@ fun MainApp(
                 productViewModel = productViewModel,
                 cartViewModel = cartViewModel,
                 userViewModel = userViewModel,
-                postViewModel = postViewModel, // ← AGREGAR
+                // ← QUITAR postViewModel de aquí también
                 onTitleChange = { newTitle -> drawerTitle = newTitle }
             )
         }
