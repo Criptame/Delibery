@@ -2,6 +2,7 @@ package com.example.delivery_app_grupo_6.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.delivery_app_grupo_6.model.Post
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class PostViewModel : ViewModel() {
 
-    // StateFlows para la UI
     private val _posts = MutableStateFlow<List<Post>>(emptyList())
     val posts: StateFlow<List<Post>> = _posts.asStateFlow()
 
@@ -19,44 +19,31 @@ class PostViewModel : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
 
-    // Función para cargar posts (simulada por ahora)
     fun refresh() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null
-
             try {
-                // Simular llamada a API - reemplaza con tu lógica real
+                // Datos de ejemplo
                 val simulatedPosts = listOf(
-                    Post(1, 1, "Primer Post", "Este es el contenido del primer post de ejemplo."),
-                    Post(2, 1, "Segundo Post", "Este es el contenido del segundo post con más detalles."),
-                    Post(3, 2, "Tercer Post", "Contenido interesante del tercer post de la aplicación.")
+                    Post(1, 1, "Primer Post", "Contenido del primer post"),
+                    Post(2, 1, "Segundo Post", "Contenido del segundo post"),
+                    Post(3, 2, "Tercer Post", "Contenido del tercer post")
                 )
-
                 _posts.value = simulatedPosts
             } catch (e: Exception) {
-                _error.value = "Error al cargar posts: ${e.message}"
+                _error.value = "Error: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
         }
     }
 
-    // Función para limpiar errores
     fun clearError() {
         _error.value = null
     }
 
-    // Cargar posts automáticamente al inicializar
     init {
         refresh()
     }
 }
-
-// Modelo de datos para Post
-data class Post(
-    val id: Int,
-    val userId: Int,
-    val title: String,
-    val body: String
-)

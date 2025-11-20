@@ -57,7 +57,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     // ✅ DEPENDENCIAS DE NAVEGACIÓN Y UI
-    implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
     implementation("androidx.compose.material3:material3:1.2.0")
@@ -87,6 +86,16 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // ✅ Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // ✅ Para navigation con ViewModels
+    implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    // ✅ Dependencias CRÍTICAS que faltan
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
 
     // ✅ TESTING
     testImplementation(libs.junit)
