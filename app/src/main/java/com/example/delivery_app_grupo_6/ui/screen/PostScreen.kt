@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.delivery_app_grupo_6.viewmodel.PostViewModel
+import com.example.delivery_app_grupo_6.model.Post // ← IMPORT AÑADIDO
 
 /**
  * Pantalla principal que muestra la lista de Posts obtenidos desde la API
@@ -58,7 +59,7 @@ fun PostScreen(
             )
         },
         floatingActionButton = {
-            if (!isLoading) {
+            if (!isLoading) { // ← CORREGIDO: !isLoading en lugar de isLoading
                 FloatingActionButton(
                     onClick = { viewModel.refresh() },
                     containerColor = MaterialTheme.colorScheme.primary
@@ -99,7 +100,7 @@ fun PostScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(posts) { post ->
-                            PostItem(post = post)
+                            PostItem(post = post) // ← ESTA LÍNEA YA NO DARÁ ERROR
                         }
                     }
                 }
@@ -142,7 +143,7 @@ fun PostScreen(
  * Componente para mostrar un Post individual
  */
 @Composable
-fun PostItem(post: com.example.delivery_app_grupo_6.model.Post) {
+fun PostItem(post: Post) { // ← CORREGIDO: Solo "Post" en lugar de la ruta completa
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),

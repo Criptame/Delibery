@@ -24,7 +24,6 @@ fun AppDrawer(
     navigateToProducts: () -> Unit,
     navigateToCart: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToPosts: () -> Unit, // ← NUEVO PARÁMETRO AGREGADO
     closeDrawer: () -> Unit
 ) {
     ModalDrawerSheet {
@@ -92,23 +91,6 @@ fun AppDrawer(
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Perfil"
-                )
-            },
-            modifier = Modifier.padding(8.dp)
-        )
-
-        // ← NUEVA OPCIÓN AGREGADA PARA POSTS
-        NavigationDrawerItem(
-            label = { Text("Posts API") },
-            selected = currentRoute == "posts",
-            onClick = {
-                navigateToPosts() // ← LLAMADA AL NUEVO PARÁMETRO
-                closeDrawer()
-            },
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.List,
-                    contentDescription = "Posts API"
                 )
             },
             modifier = Modifier.padding(8.dp)
