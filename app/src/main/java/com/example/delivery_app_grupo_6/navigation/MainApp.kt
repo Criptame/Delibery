@@ -11,10 +11,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.delivery_app_grupo_6.componentes.AppDrawer
-import com.example.delivery_app_grupo_6.componentes.AppTopBar
+import com.example.delivery_app_grupo_6.componentss.AppDrawer
+import com.example.delivery_app_grupo_6.componentss.AppTopBar
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
-import com.example.delivery_app_grupo_6.viewmodel.PostViewModel // ← AGREGAR
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 import com.example.delivery_app_grupo_6.viewmodel.UserViewModel
 import kotlinx.coroutines.launch

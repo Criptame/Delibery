@@ -1,10 +1,9 @@
-package com.example.delivery_app_grupo_6.componentes
+package com.example.delivery_app_grupo_6.componentss
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
