@@ -76,7 +76,6 @@ fun AppNavigation(
             PantallaCarrito(
                 onBackClick = { navController.popBackStack() },
                 onOrderClick = {
-                    // Navegar a la pantalla de confirmación en lugar de limpiar directamente
                     navController.navigate("confirmacionPedido")
                 },
                 cartViewModel = cartViewModel,
@@ -89,9 +88,17 @@ fun AppNavigation(
             PantallaCrearPerfil(
                 onBackClick = { navController.popBackStack() },
                 onSaveClick = { user ->
-                    userViewModel.saveUser(user)
+                    // CORRECCIÓN: Usar updateUser que existe en tu UserViewModel
+                    userViewModel.updateUser(user)
                     navController.popBackStack()
                     onTitleChange("Inicio")
+
+                    // Mostrar mensaje de éxito
+                    Toast.makeText(
+                        navController.context,
+                        "Perfil actualizado exitosamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 },
                 user = currentUser,
                 paddingValues = paddingValues

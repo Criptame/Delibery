@@ -18,7 +18,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +29,7 @@ import com.example.delivery_app_grupo_6.data.model.Product
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaProductos(
     onBackClick: () -> Unit,
@@ -38,6 +41,10 @@ fun PantallaProductos(
     val products = productViewModel.filteredProducts.collectAsStateWithLifecycle().value
     val allProducts = productViewModel.products.collectAsStateWithLifecycle().value
     val selectedCategory = productViewModel.selectedCategory.collectAsStateWithLifecycle().value
+
+    // CORRECCIÓN: Obtener el conteo de items del carrito de manera correcta
+    val cartItems = cartViewModel.cartItems.collectAsStateWithLifecycle().value
+    val itemCount = cartItems.sumOf { it.quantity }
 
     // Cargar productos al iniciar
     LaunchedEffect(Unit) {
@@ -84,7 +91,7 @@ fun PantallaProductos(
                         FilterChip(
                             selected = selectedCategory == category,
                             onClick = { productViewModel.filterByCategory(category) },
-                            label = { Text(category) }
+                            label = { Text(category ?: "Sin categoría") }
                         )
                     }
                 }
@@ -125,9 +132,9 @@ fun PantallaProductos(
                 onClick = onCartClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp)
+                    .padding(16.dp)
             ) {
-                Text("Ver Carrito (${cartViewModel.getItemCount()})")
+                Text("Ver Carrito ($itemCount)")
             }
         }
     }
@@ -153,8 +160,9 @@ fun ProductoItem(
             )
 
             Text(
-                text = producto.description,
-                modifier = Modifier.padding(vertical = 4.dp)
+                text = producto.description ?: "",
+                modifier = Modifier.padding(vertical = 4.dp),
+                color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -162,11 +170,15 @@ fun ProductoItem(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Categoría: ${producto.category}")
+                Text(
+                    text = "Categoría: ${producto.category ?: "General"}",
+                    color = Color.Gray
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "$${"%.2f".format(producto.price)}",
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
 

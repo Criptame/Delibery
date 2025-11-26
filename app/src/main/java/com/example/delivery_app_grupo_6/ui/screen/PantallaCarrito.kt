@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -91,7 +92,9 @@ fun PantallaCarrito(
                                 cartViewModel.updateQuantity(cartItem, cartItem.quantity + 1)
                             },
                             onDecrease = {
-                                cartViewModel.updateQuantity(cartItem, cartItem.quantity - 1)
+                                if (cartItem.quantity > 1) {
+                                    cartViewModel.updateQuantity(cartItem, cartItem.quantity - 1)
+                                }
                             },
                             onRemove = { cartViewModel.removeFromCart(cartItem) }
                         )
@@ -183,7 +186,10 @@ fun ItemCarrito(
                 fontWeight = FontWeight.Bold
             )
 
-            Text(text = item.product.description)
+            Text(
+                text = item.product.description ?: "",
+                color = Color.Gray
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 

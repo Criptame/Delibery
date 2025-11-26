@@ -7,19 +7,16 @@ import com.example.delivery_app_grupo_6.data.database.entities.OrderItemEntity
 @Dao
 interface OrderItemDao {
 
-    // Insertar item de pedido
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrderItem(orderItem: OrderItemEntity): Long
 
-    // Insertar múltiples items de pedido
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllOrderItems(orderItems: List<OrderItemEntity>)
 
-    // Obtener items de un pedido
     @Query("SELECT * FROM order_items WHERE order_id = :orderId")
     fun getOrderItemsByOrder(orderId: Long): Flow<List<OrderItemEntity>>
 
-    // Obtener detalles completos del pedido con información de comida
+    @RewriteQueriesToDropUnusedColumns
     @Query("""
         SELECT oi.*, f.name as food_name, f.image_url as food_image 
         FROM order_items oi
@@ -28,15 +25,14 @@ interface OrderItemDao {
     """)
     fun getOrderItemsWithDetails(orderId: Long): Flow<List<OrderItemWithDetails>>
 
-    // Data class para el resultado de la consulta con detalles
     data class OrderItemWithDetails(
-        val id: Long,
-        val orderId: Long,
-        val foodId: Long,
-        val quantity: Int,
-        val unitPrice: Double,
-        val specialInstructions: String?,
-        val foodName: String,
-        val foodImage: String?
+        @ColumnInfo(name = "id") val id: Long,
+        @ColumnInfo(name = "order_id") val orderId: Long,
+        @ColumnInfo(name = "food_id") val foodId: Long,
+        @ColumnInfo(name = "quantity") val quantity: Int,
+        @ColumnInfo(name = "unit_price") val unitPrice: Double,
+        @ColumnInfo(name = "special_instructions") val specialInstructions: String?,
+        @ColumnInfo(name = "food_name") val foodName: String,
+        @ColumnInfo(name = "food_image") val foodImage: String?
     )
 }
