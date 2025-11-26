@@ -1,16 +1,39 @@
+// repository/ProductRepository.kt - VERSIÓN SIMPLIFICADA
 package com.example.delivery_app_grupo_6.repository
 
-import com.example.delivery_app_grupo_6.model.Product
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.example.delivery_app_grupo_6.data.RetrofitInstance
+import com.example.delivery_app_grupo_6.data.model.Product
+import javax.inject.Inject
 
-open class ProductRepository {
-    open suspend fun getProducts(): List<Product> {
-        // Implementación real iría aquí
-        return emptyList()
+class ProductRepository @Inject constructor() {
+
+    private val apiService = RetrofitInstance.apiService
+
+    // Versión simple - sin Response wrapper
+    suspend fun getProducts(): List<Product> {
+        val response = apiService.getProducts()
+        return if (response.isSuccessful) {
+            response.body() ?: emptyList()
+        } else {
+            emptyList()
+        }
     }
 
-    open fun getProductsFlow(): Flow<List<Product>> = flow {
-        emit(emptyList())
+    suspend fun getProductById(id: Long): Product? {
+        val response = apiService.getProductById(id)
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
+
+    suspend fun getProductsByCategory(category: String): List<Product> {
+        val response = apiService.getProductsByCategory(category)
+        return if (response.isSuccessful) {
+            response.body() ?: emptyList()
+        } else {
+            emptyList()
+        }
     }
 }

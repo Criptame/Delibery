@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.delivery_app_grupo_6.model.CartItem
-import com.example.delivery_app_grupo_6.model.User
+import com.example.delivery_app_grupo_6.data.model.CartItem
+import com.example.delivery_app_grupo_6.data.model.User
 
 @Composable
 fun PantallaConfirmacionPedido(

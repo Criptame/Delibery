@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.delivery_app_grupo_6.model.User
+import com.example.delivery_app_grupo_6.data.model.User
 import com.example.delivery_app_grupo_6.validacion.Validators
 
 @Composable

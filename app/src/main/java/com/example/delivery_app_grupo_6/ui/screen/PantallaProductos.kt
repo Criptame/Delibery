@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.delivery_app_grupo_6.model.Product
+import com.example.delivery_app_grupo_6.data.model.Product
 import com.example.delivery_app_grupo_6.viewmodel.CartViewModel
 import com.example.delivery_app_grupo_6.viewmodel.ProductViewModel
 

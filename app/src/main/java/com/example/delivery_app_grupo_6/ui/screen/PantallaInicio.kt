@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.delivery_app_grupo_6.model.User
+import com.example.delivery_app_grupo_6.data.model.User
 
 @Composable
 fun PantallaInicio(

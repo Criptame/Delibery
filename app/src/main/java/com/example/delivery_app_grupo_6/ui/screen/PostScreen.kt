@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.delivery_app_grupo_6.viewmodel.PostViewModel
-import com.example.delivery_app_grupo_6.model.Post // ← IMPORT AÑADIDO
+import com.example.delivery_app_grupo_6.data.model.Post // ← IMPORT AÑADIDO
 
 /**
  * Pantalla principal que muestra la lista de Posts obtenidos desde la API

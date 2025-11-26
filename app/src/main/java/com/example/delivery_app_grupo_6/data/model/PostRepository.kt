@@ -1,22 +1,16 @@
-package com.example.delivery_app_grupo_6.model
+package com.example.delivery_app_grupo_6.repository
 
 import android.util.Log
+import com.example.delivery_app_grupo_6.data.RetrofitInstance
+import com.example.delivery_app_grupo_6.data.model.Post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-/**
- * Repository pattern - actúa como intermediario entre ViewModel y fuentes de datos
- *
- * Encapsula la lógica de acceso a datos y proporciona una API limpia al ViewModel
- */
-class PostRepository {
+class PostRepository @Inject constructor() {
 
     private val tag = "PostRepository"
 
-    /**
-     * Obtiene la lista de posts desde la API
-     * @return Result con la lista de posts o error
-     */
     suspend fun getPosts(): Result<List<Post>> = withContext(Dispatchers.IO) {
         try {
             Log.d(tag, "Iniciando petición de posts...")
@@ -38,11 +32,6 @@ class PostRepository {
         }
     }
 
-    /**
-     * Obtiene un post específico por su ID
-     * @param id ID del post a obtener
-     * @return Result con el post o error
-     */
     suspend fun getPostById(id: Int): Result<Post> = withContext(Dispatchers.IO) {
         try {
             Log.d(tag, "Obteniendo post con ID: $id")
@@ -68,11 +57,6 @@ class PostRepository {
         }
     }
 
-    /**
-     * Obtiene posts de un usuario específico
-     * @param userId ID del usuario
-     * @return Result con la lista de posts del usuario
-     */
     suspend fun getPostsByUserId(userId: Int): Result<List<Post>> = withContext(Dispatchers.IO) {
         try {
             Log.d(tag, "Obteniendo posts del usuario: $userId")
